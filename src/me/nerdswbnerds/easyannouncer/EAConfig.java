@@ -1,5 +1,7 @@
 package me.nerdswbnerds.easyannouncer;
 
+import java.io.*;
+
 public class EAConfig {
     EasyAnnouncer plugin;
 
@@ -8,6 +10,7 @@ public class EAConfig {
     }
 
     public void load(){
+		plugin.getConfig().options().copyDefaults(true);
 		plugin.saveDefaultConfig();
         plugin.reloadConfig();
 
@@ -18,11 +21,44 @@ public class EAConfig {
     }
 
     public void save(){
-        plugin.getConfig().set("prefix", EAManager.prefix);
-        plugin.getConfig().set("interval", EAManager.interval);
-        plugin.getConfig().set("mode-id", EAManager.mode.id);
-        plugin.getConfig().set("messages", EAManager.messages);
+		FileOutputStream fos = null;
+		try{
+			File file = new File(plugin.getDataFolder().getPath() + "/config.yml");
+			if(file.exists())
+				file.delete();
 
-        plugin.saveConfig();
+			if(!file.exists()){
+				file.createNewFile();
+			}
+
+			fos = new FileOutputStream(file.getPath());
+			PrintWriter out = new PrintWriter(
+					new BufferedWriter(
+							new OutputStreamWriter(fos, "UTF-8")));
+
+			out.println("#################################");
+			out.println("##  === [ EASY ANNOUNCER ] === ##");
+			out.println("#################################");
+			out.println("");
+			out.println("# Prefix of all announcements.");
+			out.println("# ex. [info] Your announcement here.");
+			out.println("prefix: \"" + EAManager.prefix + "\"");
+			out.println("");
+			out.println("# Interval (in seconds) between announcements.");
+			out.println("interval: " + EAManager.interval);
+			out.println("");
+			out.println("# Announcement mode, use '/easyannouncer help modes' for more info.");
+			out.println("mode-id: " + EAManager.mode.id);
+			out.println("");
+			out.println("messages:");
+			for(String m: EAManager.messages){
+				out.println("- " + m);
+			}
+
+			out.flush();
+			out.close();
+		}catch(Exception e){
+
+		}
     }
 }

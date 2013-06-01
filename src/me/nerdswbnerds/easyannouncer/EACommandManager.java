@@ -29,15 +29,15 @@ public class EACommandManager implements CommandExecutor {
                 }
 
                 if(args.length <= 1){
-					sender.sendMessage(ChatColor.AQUA + "To update the prefix, use /" + label + " prefix <new-prefix>");
-					sender.sendMessage(ChatColor.AQUA + "The prefix currently is " + EAManager.prefix);
+					sender.sendMessage(ChatColor.AQUA + "To update the prefix, use " + ChatColor.RED + "/" + label + " prefix <new-prefix>");
+					sender.sendMessage(ChatColor.AQUA + "The prefix currently is " + EAManager.parseColor(EAManager.prefix));
 					return true;
                 }
 
                 StringBuilder sb = new StringBuilder(args[1]);
 
                 for(int i = 2; i < args.length; i++){
-                    sb.append(args[i]);
+                    sb.append(" " + args[i]);
                 }
 
                 EAManager.prefix = sb.toString();
@@ -72,7 +72,7 @@ public class EACommandManager implements CommandExecutor {
                     }
                 }
 
-				sender.sendMessage(ChatColor.AQUA + "To update the interval, use /" + label + " interval <new-interval>");
+				sender.sendMessage(ChatColor.AQUA + "To update the interval, use " + ChatColor.RED + "/" + label + " interval <new-interval>");
 				sender.sendMessage(ChatColor.AQUA + "Interval currently set to " + ChatColor.GREEN + EAManager.interval + " second(s).");
                 return true;
             }
@@ -93,10 +93,12 @@ public class EACommandManager implements CommandExecutor {
                 StringBuilder sb = new StringBuilder(args[1]);
 
                 for(int i = 2; i < args.length; i++){
-                     sb.append(args[i]);
+                     sb.append(" " + args[i]);
                 }
 
                 EAManager.addMessage(sb.toString());
+
+				new EAConfig(plugin).save();
 
                 sender.sendMessage(ChatColor.GREEN + "Added: " + EAManager.getLastPrefixColor() + (EAManager.parseColor(sb.toString())));
 				return true;
@@ -126,8 +128,15 @@ public class EACommandManager implements CommandExecutor {
 
 				toRemove--;
 
+				if(toRemove < 0 || toRemove >= EAManager.messages.size()){
+					sender.sendMessage(ChatColor.RED + "Error: ID must be between 1 (inclusive) and " + EAManager.messages.size() + " (inclusive).");
+					return true;
+				}
+
 				String message = EAManager.getLastPrefixColor() + EAManager.getMessage(toRemove);
 				EAManager.removeMessage(toRemove);
+
+				new EAConfig(plugin).save();
 
 				sender.sendMessage(ChatColor.RED + "Removed: " + message);
 				return true;
@@ -142,7 +151,7 @@ public class EACommandManager implements CommandExecutor {
                 }
 
                 if(args.length <= 1){
-					sender.sendMessage(ChatColor.AQUA + "To update the mode, use /" + label + " mode <mode-id>");
+					sender.sendMessage(ChatColor.AQUA + "To update the mode, use " + ChatColor.RED + "/" + label + " mode <mode-id>");
 					sender.sendMessage(ChatColor.AQUA + "The mode is currently set to " + ChatColor.GREEN + EAManager.mode.id + " (" + EAManager.mode.toString() + ")");
                     return true;
                 }
@@ -272,6 +281,7 @@ public class EACommandManager implements CommandExecutor {
 				}
 
 				sender.sendMessage("");
+				return  true;
             }
 
             if(args[0].equalsIgnoreCase("reload")){

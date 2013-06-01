@@ -103,7 +103,7 @@ public class EAManager {
 
 		try{
 			toRet = toRet.trim();
-			toRet = toRet.substring(0, toRet.length() - 2);
+			toRet = toRet.substring(toRet.length() - 2, toRet.length());
 			toRet = parseColor(toRet);
 		}catch (Exception e){
 			broken = true;

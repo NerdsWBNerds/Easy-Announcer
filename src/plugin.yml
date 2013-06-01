@@ -2,7 +2,7 @@ name: Easy Announcer
 author: NerdsWBNerds
 description: Setup automatic messages for your server.
 website: http://nerdspvp.com/
-version: 1.0
+version: 1.1
 main: me.nerdswbnerds.easyannouncer.EasyAnnouncer
 commands:
    easyannouncer:
