@@ -1,0 +1,11 @@
+name: Easy Announcer
+author: NerdsWBNerds
+description: Setup automatic messages for your server.
+website: http://nerdspvp.com/
+version: 1.0
+main: me.nerdswbnerds.easyannouncer.EasyAnnouncer
+commands:
+   easyannouncer:
+      description: All commands for Easy Announcer.
+      usage: /<command> help
+      aliases: [ea, announcer]

@@ -1,0 +1,13 @@
+#################################
+##  === [ EASY ANNOUNCER ] === ##
+#################################
+
+# Prefix of all announcements.
+# ex. [info] Your announcement here.
+prefix: "&a[Info]&c "
+
+# Interval (in seconds) between announcements.
+interval: 60
+
+# Announcement mode, use '/easyannouncer help modes' for more info.
+mode-id: 1
