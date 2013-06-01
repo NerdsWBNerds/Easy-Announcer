@@ -11,3 +11,5 @@ interval: 60
 
 # Announcement mode, use '/easyannouncer help modes' for more info.
 mode-id: 1
+
+messages:
